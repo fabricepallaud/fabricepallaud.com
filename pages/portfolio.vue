@@ -2,7 +2,7 @@
   <div class="wrap">
     <div class="container">
       <h1 class="page_title">
-        Case studies
+        Projects
       </h1>
 
       <p class="page_summary page_summary--about">

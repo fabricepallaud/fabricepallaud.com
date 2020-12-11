@@ -56,8 +56,8 @@ export default {
       portfolioLocation: 0,
       isOpen: false,
       ctaCaptions: [
-        'see case studies',
-        'hide case studies'
+        'see projects',
+        'hide projects'
       ],
       ctaCaption: ''
     }

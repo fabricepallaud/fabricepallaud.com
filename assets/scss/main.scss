@@ -274,3 +274,15 @@ iframe {
   position: absolute;
   top: -9999px;
 }
+
+.page-enter-active,
+.page-leave-active {
+  transition: all 0.25s;
+}
+
+.page-enter,
+.page-leave-active {
+  // opacity: 0.9;
+  filter: blur(4px);
+  // transform: scale(0.98);
+}
