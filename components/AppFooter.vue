@@ -61,6 +61,7 @@
   margin-right: 1em;
   @include media_600 {
     max-width: 30px;
+    margin-right: 0.5em;
   }
 }
 
@@ -70,6 +71,10 @@
 
 .footer__github a {
   color: $white;
+
+  @include media_600 {
+    font-size: 16px;
+  }
 }
 
 .footer__github strong {

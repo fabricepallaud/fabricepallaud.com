@@ -71,7 +71,7 @@ export default {
 
   @include media_600 {
     padding: 12px;
-    margin-bottom: 80px;
+    margin-bottom: 60px;
   }
 }
 
@@ -88,6 +88,10 @@ export default {
 .portfolio_entry__maincontent {
   margin: 1em 0 1.5em;
   max-width: calc(100% - 100px);
+
+  @include media_600 {
+    max-width: none;
+  }
 }
 
 .portfolio_entry__footer {

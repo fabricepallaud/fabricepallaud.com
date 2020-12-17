@@ -6,15 +6,9 @@ const staticRoutes =
     '/portfolio'
   ]
 const dynamicRoutes = async () => {
-  const routes = await axios.get('http://fabricepallaud.com/wp/wp-json/projects/v1/posts')
+  const routes = await axios.get('https://fabricepallaud.com/wp/wp-json/projects/v1/posts')
     .then(res => res.data.map((project) => `/project/${project.ID}/${project.post_name}`))
-    .then(res => res.concat(
-      [
-        '/about',
-        '/contact',
-        '/portfolio'
-      ]
-    ))
+
   return routes
 }
 

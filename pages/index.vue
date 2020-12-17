@@ -36,6 +36,7 @@
       <portfolio
         v-show="isOpen"
         :projects="projects"
+        class="home-portfolio"
       />
     </div>
   </div>
@@ -108,9 +109,13 @@ export default {
 
 <style lang="scss">
 .wrap.wrap--front {
-  padding: 120px 0;
-  @include media_600 {
-    padding: 60px 0;
+  // padding: 120px 0;
+  // @include media_600 {
+    // padding: 60px 0;
+    // padding: inherit;
+  // }
+  @include media_600_up {
+    padding: 120px 0;
   }
 }
 
@@ -169,7 +174,7 @@ export default {
   color: $gray4;
   @include media_600 {
     display: block;
-    margin-bottom: 0.5em;
+    // margin-bottom: 0.5em;
   }
 }
 
@@ -183,8 +188,18 @@ export default {
   align-items: center;
   margin: 60px 0 75px;
 
+  @include media_600 {
+    display: none;
+  }
+
   .button {
     width: 210px;
+  }
+}
+
+.home-portfolio {
+  @include media_600 {
+    display: block !important;
   }
 }
 </style>

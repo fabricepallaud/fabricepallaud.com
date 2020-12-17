@@ -2,13 +2,16 @@
   <div>
     <header class="banner">
       <div class="container container--header">
-        <a class="header__branding" href="/">
+        <nuxt-link
+          to="/"
+          class="header__branding"
+        >
           <img
             class="header__branding__logo"
             src="@/assets/img/logo_desktop.svg"
           >
           <div class="logo_square" />
-        </a>
+        </nuxt-link>
 
         <social-links />
       </div>
@@ -28,11 +31,6 @@ export default {
   components: {
     SocialLinks,
     MainMenu
-  },
-  async mounted () {
-    const routes = await axios.get('http://fabricepallaud.com/wp/wp-json/projects/v1/posts')
-      .then(res => res.data.map((project) => `/project/${project.ID}/${project.post_name}`))
-    // console.log(routes)
   }
 }
 </script>

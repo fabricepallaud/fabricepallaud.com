@@ -8,7 +8,7 @@
             :key="i"
             :class="item.icon"
           >
-            <nuxt-link :to="item.url.replace('http://fabricepallaud.com', '')">
+            <nuxt-link :to="item.url">
               {{ item.name }}
             </nuxt-link>
           </li>
@@ -51,6 +51,7 @@ export default {
   },
   computed: {
     ...mapState({
+      domainName: state => state.domainName,
       baseUrl: state => state.baseUrl,
       mobileMenuOpen: state => state.mobileMenuOpen
     })
