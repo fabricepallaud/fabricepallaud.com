@@ -103,6 +103,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   data () {
     return {
@@ -112,6 +114,11 @@ export default {
       contactMessage: null,
       messageHuman: null
     }
+  },
+  computed: {
+    ...mapState({
+      baseUrl: state => state.baseUrl
+    })
   },
   methods: {
     sendEmail () {

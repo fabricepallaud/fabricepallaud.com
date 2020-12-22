@@ -78,6 +78,10 @@ export default {
 .nav_primary_wrap,
 .nav_primary {
   height: 54px;
+
+  @include media_600 {
+    height: auto;
+  }
 }
 
 .nav_primary_wrap {
@@ -106,6 +110,10 @@ export default {
   background: $brown;
   padding: 12px 0;
   box-sizing: border-box;
+
+  @include media_600 {
+    padding: 7px 0;
+  }
 
   ul {
     display: flex;

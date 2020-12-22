@@ -31,7 +31,7 @@ $hamburger-button_bar_thickness: 2px;
 
 .hamburger-button {
   position: absolute;
-  top: 15px;
+  top: 9px;
   right: 20px;
   width: $hamburger-button_width;
   height: $hamburger-button_bar_space;

@@ -9,6 +9,7 @@ const dynamicRoutes = async () => {
   const routes = await axios.get('https://fabricepallaud.com/wp/wp-json/projects/v1/posts')
     .then(res => res.data.map((project) => `/project/${project.ID}/${project.post_name}`))
 
+  routes.push("/")
   return routes
 }
 

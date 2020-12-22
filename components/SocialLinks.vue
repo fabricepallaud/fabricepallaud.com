@@ -35,16 +35,17 @@ export default {
   &.menu-bar {
     display: none;
     position: absolute;
-    top: 12px;
+    top: 6px;
     right: 70px;
     z-index: 0;
 
     @include media_600 {
-      display: flex;
+      display: flex !important;
     }
 
     li + li {
       margin-left: 20px;
+      top: 2px;
     }
   }
 
