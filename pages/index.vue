@@ -72,9 +72,11 @@ export default {
   mounted () {
     this.$axios.$get(`${this.baseUrl}/wp-json/last_projects/v1/posts`)
       .then((res) => {
+        this.$store.commit('SET_LOADING', false)
         this.projects = res
       })
       .catch((err) => {
+        this.$store.commit('SET_LOADING', false)
         this.$toast.error(err.response)
       })
 
@@ -109,11 +111,6 @@ export default {
 
 <style lang="scss">
 .wrap.wrap--front {
-  // padding: 120px 0;
-  // @include media_600 {
-    // padding: 60px 0;
-    // padding: inherit;
-  // }
   @include media_600_up {
     padding: 120px 0;
   }
@@ -174,7 +171,6 @@ export default {
   color: $gray4;
   @include media_600 {
     display: block;
-    // margin-bottom: 0.5em;
   }
 }
 

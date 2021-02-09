@@ -1,5 +1,5 @@
 <template>
-  <div class="wrap">
+  <div class="wrap wrap--portfolio">
     <div class="container">
       <h1 class="page_title">
         Projects
@@ -18,6 +18,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 import { mapState } from 'vuex'
 import Portfolio from '@/components/Portfolio'
 
@@ -39,79 +40,83 @@ export default {
     this.$axios.$get(`${this.baseUrl}/wp-json/projects/v1/posts`)
       .then((res) => {
         this.projects = res
+        this.$store.commit('SET_LOADING', false)
       })
       .catch((err) => {
         this.$toast.error(err.response)
+        this.$store.commit('SET_LOADING', false)
       })
   }
 }
 </script>
 
 <style lang="scss">
-.content.content--about {
-  overflow: visible;
-}
-
-.page_header--about {
-  @include media_600 {
-    margin-bottom: 40px;
+.wrap--portfolio {
+  .content.content--about {
+    overflow: visible;
   }
-}
 
-.content--about {
-  display: flex;
-  justify-content: space-between;
-  @include media_768 {
-    flex-direction: column-reverse;
+  .page_header--about {
+    @include media_600 {
+      margin-bottom: 40px;
+    }
   }
-}
 
-.page_summary--about {
-  width: 50%;
-}
-
-.about_info {
-  width: 55%;
-  @include media_768 {
-    width: auto;
+  .content--about {
+    display: flex;
+    justify-content: space-between;
+    @include media_768 {
+      flex-direction: column-reverse;
+    }
   }
-}
 
-.about_illustration {
-  text-align: right;
-  width: 40%;
-  @include media_768 {
-    width: auto;
+  .page_summary--about {
+    width: 50%;
   }
-}
 
-.about_illustration__img {
-  max-width: 100%;
-  height: auto;
-  margin-top: -185px;
-  @include media_768 {
-    margin: 0 0 30px;
+  .about_info {
+    width: 55%;
+    @include media_768 {
+      width: auto;
+    }
   }
-}
 
-.about_skills {
-  margin-top: 1em;
-  margin-top: 0;
-}
+  .about_illustration {
+    text-align: right;
+    width: 40%;
+    @include media_768 {
+      width: auto;
+    }
+  }
 
-.about_skills strong {
-  background: $yellow;
-  padding: 0 5px;
-  margin: 0 3px;
-}
+  .about_illustration__img {
+    max-width: 100%;
+    height: auto;
+    margin-top: -185px;
+    @include media_768 {
+      margin: 0 0 30px;
+    }
+  }
 
-.about_skills li {
-  margin-bottom: 1em;
-}
+  .about_skills {
+    margin-top: 1em;
+    margin-top: 0;
+  }
 
-.oatmeal {
-  position: relative;
-  top: 2px;
-  display: none;
+  .about_skills strong {
+    background: $yellow;
+    padding: 0 5px;
+    margin: 0 3px;
+  }
+
+  .about_skills li {
+    margin-bottom: 1em;
+  }
+
+  .oatmeal {
+    position: relative;
+    top: 2px;
+    display: none;
+  }
 }
 </style>

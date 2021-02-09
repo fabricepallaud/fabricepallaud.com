@@ -3,7 +3,7 @@
     <div class="container content">
       <section class="page_header page_header--contact">
         <h1 class="page_title">
-          Let's talk !
+          Let's talk!
         </h1>
 
         <p class="page_summary page_summary--contact">
@@ -15,7 +15,6 @@
         <div class="contact_form">
           <div v-if="!success">
             <form @submit.prevent="sendEmail">
-              <!-- <?php if ($response !== '') echo generate_response('error', $response); ?> -->
               <p>
                 <label for="form_name">
                   Name<span> *</span>
@@ -29,6 +28,7 @@
                   required
                 >
               </p>
+
               <p>
                 <label for="form_email">
                   Email<span> *</span>
@@ -41,6 +41,7 @@
                   required
                 >
               </p>
+
               <p>
                 <label for="form_message">
                   Message<span> *</span>
@@ -53,13 +54,14 @@
                   required
                 ></textarea>
               </p>
+
               <p>
                 <label for="message_human">
                   Robot check<span> *</span>
                 </label>
                 <input
                   id="message_human"
-                  v-model="messageHuman"
+                  v-model="antiSpam"
                   class="required"
                   type="text"
                   name="message_human"
@@ -67,11 +69,13 @@
                 >
                 <span id="human_op">+ 3 = <strong>5</strong></span>
               </p>
+
               <input
                 type="submit"
                 class="button"
                 value="Send"
               >
+
               <input
                 type="hidden"
                 name="form_sub"
@@ -79,10 +83,12 @@
               >
             </form>
           </div>
+
           <div v-else class="success">
             <h2>
               Success!
             </h2>
+
             <p>
               Thanks, your message was sent and I'll get back to you ASAP.
             </p>
@@ -93,8 +99,9 @@
           <p>
             I am best contacted by email. If you have a general enquiry, please include as much detail as possible in the message field.
           </p>
+
           <p>
-            Alternatively, you can shoot me an email to <a href="mailto:fabpallaud@gmail.com">fabpallaud@gmail.com</a>.
+            Alternatively, you can shoot me an email at <a href="mailto:fabpallaud@gmail.com">fabpallaud@gmail.com</a>.
           </p>
         </div>
       </section>
@@ -103,6 +110,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 import { mapState } from 'vuex'
 
 export default {
@@ -112,7 +120,7 @@ export default {
       contactName: null,
       contactEmail: null,
       contactMessage: null,
-      messageHuman: null
+      antiSpam: null
     }
   },
   computed: {
@@ -120,20 +128,43 @@ export default {
       baseUrl: state => state.baseUrl
     })
   },
+  mounted() {
+    this.$store.commit('SET_LOADING', false)
+  },
   methods: {
-    sendEmail () {
+    async sendEmail () {
+      if (this.antiSpam != 2) {
+        this.$toast.error('Wrong answer to spam question')
+        return
+      }
+
+      this.$store.commit('SET_LOADING', true)
+
       const formData = new FormData()
+
       formData.append('contact_name', this.contactName)
       formData.append('contact_email', this.contactEmail)
       formData.append('contact_message', this.contactMessage)
 
-      this.$axios.$put(`${this.baseUrl}/wp-json/contact/v1/send`, formData)
-        .then((res) => {
-          this.success = true
-        })
-        .catch((err) => {
-          this.$toast.error(err.response)
-        })
+      const response = await fetch(`${this.baseUrl}/wp-json/contact/v1/send`, {
+        method: 'POST',
+        body: formData
+      })
+
+      this.$store.commit('SET_LOADING', false)
+
+      if (!response.ok) {
+        this.$toast.error("Server issue, please use your usual email client instead.")
+        return
+      }
+
+      const json = await response.json()
+      if (json.code === 502) {
+        this.$toast.error(json.message)
+      } else {
+        this.success = true
+        window.scrollTo(0, 0)
+      }
     }
   }
 }
@@ -224,7 +255,7 @@ export default {
 }
 
 .success {
-  background-color: $green_transparent;
+  background-color: $gray96;
   padding: 30px;
   border-radius: 3px;
 

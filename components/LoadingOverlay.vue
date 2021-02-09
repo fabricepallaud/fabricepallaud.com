@@ -1,21 +1,17 @@
 <template>
   <div v-if="loading" class="loading-page">
-    <div class="loading"></div>
+    <div class="loading-icon"></div>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
-  data: () => ({
-    loading: false
-  }),
-  methods: {
-    start () {
-      this.loading = true
-    },
-    finish () {
-      this.loading = false
-    }
+  computed: {
+    ...mapState({
+      loading: state => state.loading
+    })
   }
 }
 </script>
@@ -35,7 +31,6 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   animation: fadeIn ease 1.25s;
   -webkit-animation: fadeIn ease 1.25s;
   -moz-animation: fadeIn ease 1.25s;
@@ -43,16 +38,20 @@ export default {
   -ms-animation: fadeIn ease 1.25s;
 }
 
-.loading {
+.loading-icon {
+  position: relative;
+  top: 235px;
   display: inline-block;
   width: 3.5rem;
   height: 3.5rem;
   border: 5px solid $red;
   border-radius: 50%;
   border-top-color: $brown;
-  // opacity: 0.15;
-  // opacity: 0.75;
   animation: spin 1s ease-in-out infinite;
+
+  @include media_600 {
+    top: 90px;
+  }
 }
 
 @keyframes spin {

@@ -30,10 +30,6 @@ export default {
     ]
   },
   /*
-  ** Customize the progress-bar color
-  */
-  loading: '~/components/LoadingBar.vue',
-  /*
   ** Global CSS
   */
   css: [
@@ -58,7 +54,8 @@ export default {
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
     '@nuxtjs/eslint-module',
-    '@nuxtjs/google-analytics'
+    '@nuxtjs/google-analytics',
+    'nuxt-purgecss'
   ],
   googleAnalytics: {
     id: 'UA-151254386-1'
@@ -74,6 +71,9 @@ export default {
     '@nuxtjs/style-resources',
     'vue-scrollto/nuxt'
   ],
+  purgeCSS: {
+    whitelist: () => [/token$/]
+  },
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options

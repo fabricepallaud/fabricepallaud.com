@@ -42,10 +42,12 @@ export default {
   mounted () {
     this.$axios.$get(`${this.baseUrl}/wp-json/wp/v2/pages/?slug=about`)
       .then((res) => {
+        this.$store.commit('SET_LOADING', false)
         this.content = res[0].content.rendered
       })
       .catch((err) => {
-        this.$toast.error(err.response)
+        this.$store.commit('SET_LOADING', false)
+        this.$toast.error(err)
       })
   }
 }
@@ -68,11 +70,6 @@ export default {
   @include media_768 {
     flex-direction: column-reverse;
   }
-}
-
-.back {
-  display: inline-block;
-  margin-bottom: 2em;
 }
 
 .page_summary--about {

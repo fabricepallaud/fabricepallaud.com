@@ -18,10 +18,10 @@ div {
   background-color: $white;
   position: relative;
   overflow: hidden;
-  padding: 70px 0 160px;
+  padding: 55px 0 80px;
 
   @include media_600 {
-    padding: 80px 0 50px;
+    padding: 75px 0 50px;
   }
 }
 
@@ -56,6 +56,7 @@ div,
 span,
 p,
 li,
+blockquote,
 textarea,
 input,
 select {
@@ -124,6 +125,7 @@ p + h3 {
 h3 {
   @include subsection_heading;
   margin: 0 0 15px;
+  
   @include media_600 {
     margin: 0 0 10px;
   }
@@ -137,20 +139,17 @@ h3.container {
   border-bottom: 1px solid $red;
 }
 
-.content_ul li,
-.content li {
-  position: relative;
-  padding-left: 25px;
-}
+.content {
+  ul {
+    margin-bottom: 1.25em;
 
-.content_ul li:before,
-.content li:before {
-  position: absolute;
-  left: 0;
-  top: 4px;
-  font-family: 'icomoon' !important;
-  font-size: 15px;
-  content: "\ea1c";
+    li {
+      position: relative;
+      padding-left: 0.125em;
+      margin: 0 0 0.25em 1em;
+      list-style: disc;
+    }
+  }
 }
 
 .content .alignleft {
@@ -184,7 +183,6 @@ h3.container {
     width: 100% !important;
   }
   @include media_600 {
-    // margin-bottom: 0;
     margin-bottom: 10px;
   }
 }
@@ -277,14 +275,12 @@ iframe {
   top: -9999px;
 }
 
-.page-enter-active,
-.page-leave-active {
-  transition: all 0.25s;
-}
+.app-inner {
+  &.loading {
+    filter: blur(3px);
 
-.page-enter,
-.page-leave-active {
-  // opacity: 0.9;
-  filter: blur(4px);
-  // transform: scale(0.98);
+    @include media_600 {
+      filter: blur(5px);
+    }
+  }
 }

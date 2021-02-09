@@ -1,15 +1,7 @@
 <template>
   <div class="wrap wrap--single">
-    <div class="content container">
+    <div class="content container container--single">
       <header class="header_with_subtitle">
-        <a
-          @click="goToPreviousView"
-          class="back"
-          href="#"
-        >
-          Go back
-        </a>
-
         <h1 v-html="title" />
       </header>
 
@@ -39,15 +31,12 @@ export default {
       .then((res) => {
         this.title = res.post_title
         this.content = res.post_content
+        this.$store.commit('SET_LOADING', false)
       })
       .catch((err) => {
         this.$toast.error(err)
+        this.$store.commit('SET_LOADING', false)
       })
-  },
-  methods: {
-    goToPreviousView () {
-      this.$router.go(-1)
-    }
   }
 }
 </script>
@@ -81,14 +70,6 @@ export default {
   max-width: $content_width_small;
   @include media_600 {
     max-width: none;
-  }
-}
-
-.wrap--single ul + h3,
-.wrap--single p + h3 {
-  margin-top: 3em;
-  @include media_600 {
-    margin-top: 2em;
   }
 }
 
@@ -151,82 +132,35 @@ export default {
   }
 }
 
-pre {
-  border-radius: 0;
-  max-width: $content_width_small;
-  margin: 2em auto 4em !important;
+.enlighter-default.enlighter-v-standard {
+  padding: 1em 0 1.25em;
+  border-left: solid 8px $red;
 
-  @include media_1200 {
-    padding-left: $content_margin_mobile;
-    padding-right: $content_margin_mobile;
+  &.enlighter-t-godzilla {
+    background: $gray1;
   }
 
-  @include media_600 {
-    margin: 2em auto 2em !important;
-  }
-}
+  .enlighter {
+    div {
+      line-height: 1.1;
+    }
 
-code[class*="language-"] span,
-pre[class*="language-"] span {
-  @include code;
-}
+    .enlighter-m0,
+    .enlighter-m1,
+    .enlighter-m2,
+    .enlighter-m3 {
+      color: $red;
+    }
 
-code[class*="language-"],
-pre[class*="language-"] {
-  @include media_600 {
-    line-height: 1.2 !important;
-  }
-}
-
-pre[class*="language-"] {
-  @include media_600 {
-    padding-top: 0 !important;
+    span {
+      font-size: 0.9rem;
+      font-family: 'consolas', sans-serif;
+    }
   }
 }
 
 .overflow {
   overflow: hidden;
   margin-top: 1.5em;
-}
-
-.jseditor {
-  width: 150px;
-  float: left;
-
-  @include media_960 {
-    width: auto;
-    float: none;
-  }
-}
-
-.jseditor_text {
-  width: 710px;
-  float: right;
-
-  @include media_960 {
-    width: auto;
-    float: none;
-  }
-}
-
-.jseditor img {
-  @include media_960 {
-    margin-left: 0;
-    margin-right: 0;
-  }
-}
-
-.jseditor_text p {
-  @include media_960 {
-    padding-left: 0;
-    padding-right: 0;
-  }
-}
-
-.no_scrollbar {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
 }
 </style>

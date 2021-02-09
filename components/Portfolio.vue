@@ -28,9 +28,10 @@
 
         <nuxt-link :to="`/project/${project.ID}/${project.post_name}`">
           <footer class="portfolio_entry__footer">
-            <div class="skills">
-              {{ project.acf.skills }}
-            </div>
+            <div
+              v-html="project.acf.skills"
+              class="skills"
+            />
 
             <div
               v-if="project.acf.reading_time"
@@ -120,10 +121,32 @@ export default {
 }
 
 .skills {
-  color: $red;
+  ul {
+    display: flex;
 
-  @include media_600 {
-    color: $gray9;
+    li {
+      position: relative;
+      font-size: 0.85em;
+      color: $red;
+
+      & + li {
+        margin-left: 1em;
+        padding-left: 1.25em;
+
+        &::before {
+          content: '•';
+          opacity: 0.35;
+          font-size: 1.35em;
+          position: absolute;
+          left: 0;
+          top: -4px;
+        }
+      }
+
+      @include media_600 {
+        color: $gray9;
+      }
+    }
   }
 }
 
@@ -133,12 +156,6 @@ export default {
   @include media_768 {
     display: none;
   }
-}
-
-.skills,
-.time_to_read {
-  font-size: 0.8em;
-  font-family: $lato;
 }
 
 .portfolio-enter-active,
