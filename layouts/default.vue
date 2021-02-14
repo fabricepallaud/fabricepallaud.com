@@ -35,6 +35,8 @@ export default {
     })
   },
   mounted () {
+    this.$store.commit('SET_LOADING', true)
+    
     const cookies = Cookies.get('cookie_notice_dismiss')
     this.$store.commit('SET_COOKIE_NOTICE_STATUS', !cookies)
   },

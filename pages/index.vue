@@ -70,14 +70,15 @@ export default {
     })
   },
   mounted () {
-    this.$axios.$get(`${this.baseUrl}/wp-json/last_projects/v1/posts`)
-      .then((res) => {
-        this.$store.commit('SET_LOADING', false)
-        this.projects = res
+    this.$axios.$get('/projects/v1/posts')
+      .then((response) => {
+        this.projects = response
       })
-      .catch((err) => {
+      .catch((error) => {
+        this.$toast.error(error.response)
+      })
+      .finally(() => {
         this.$store.commit('SET_LOADING', false)
-        this.$toast.error(err.response)
       })
 
     if (this.showCaseStudies) {

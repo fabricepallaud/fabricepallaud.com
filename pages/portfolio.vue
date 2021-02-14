@@ -37,13 +37,14 @@ export default {
     })
   },
   mounted () {
-    this.$axios.$get(`${this.baseUrl}/wp-json/projects/v1/posts`)
+    this.$axios.$get('/projects/v1/posts')
       .then((res) => {
         this.projects = res
-        this.$store.commit('SET_LOADING', false)
       })
       .catch((err) => {
         this.$toast.error(err.response)
+      })
+      .finally(() => {
         this.$store.commit('SET_LOADING', false)
       })
   }

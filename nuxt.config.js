@@ -55,7 +55,6 @@ export default {
     // Doc: https://github.com/nuxt-community/eslint-module
     '@nuxtjs/eslint-module',
     '@nuxtjs/google-analytics',
-    'nuxt-purgecss'
   ],
   googleAnalytics: {
     id: 'UA-151254386-1'
@@ -69,16 +68,15 @@ export default {
     '@nuxtjs/router',
     '@nuxtjs/toast',
     '@nuxtjs/style-resources',
-    'vue-scrollto/nuxt'
+    'vue-scrollto/nuxt',
+    '@nuxtjs/axios'
   ],
-  purgeCSS: {
-    whitelist: () => [/token$/]
-  },
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
+    baseURL: process.env.API_URL
   },
   toast: {
     position: 'bottom-right',

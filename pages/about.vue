@@ -26,6 +26,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 import { mapState } from 'vuex'
 
 export default {
@@ -40,14 +41,15 @@ export default {
     })
   },
   mounted () {
-    this.$axios.$get(`${this.baseUrl}/wp-json/wp/v2/pages/?slug=about`)
-      .then((res) => {
-        this.$store.commit('SET_LOADING', false)
-        this.content = res[0].content.rendered
+    this.$axios.$get('/wp/v2/pages/?slug=about')
+      .then((response) => {
+        this.content = response[0].content.rendered
       })
-      .catch((err) => {
+      .catch((error) => {
+        this.$toast.error(error)
+      })
+      .finally(() => {
         this.$store.commit('SET_LOADING', false)
-        this.$toast.error(err)
       })
   }
 }

@@ -27,14 +27,15 @@ export default {
     })
   },
   mounted () {
-    this.$axios.$get(`${this.baseUrl}/wp-json/project/v1/post/${this.$route.params.id}`)
-      .then((res) => {
-        this.title = res.post_title
-        this.content = res.post_content
-        this.$store.commit('SET_LOADING', false)
+    this.$axios.$get(`/project/v1/post/${this.$route.params.id}`)
+      .then((response) => {
+        this.title = response.post_title
+        this.content = response.post_content
       })
-      .catch((err) => {
-        this.$toast.error(err)
+      .catch((error) => {
+        this.$toast.error(error)
+      })
+      .finally(() => {
         this.$store.commit('SET_LOADING', false)
       })
   }

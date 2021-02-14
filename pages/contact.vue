@@ -129,7 +129,9 @@ export default {
     })
   },
   mounted() {
-    this.$store.commit('SET_LOADING', false)
+    setTimeout(() => {
+      this.$store.commit('SET_LOADING', false)
+    }, 200)
   },
   methods: {
     async sendEmail () {
@@ -146,25 +148,17 @@ export default {
       formData.append('contact_email', this.contactEmail)
       formData.append('contact_message', this.contactMessage)
 
-      const response = await fetch(`${this.baseUrl}/wp-json/contact/v1/send`, {
-        method: 'POST',
-        body: formData
-      })
-
-      this.$store.commit('SET_LOADING', false)
-
-      if (!response.ok) {
-        this.$toast.error("Server issue, please use your usual email client instead.")
-        return
-      }
-
-      const json = await response.json()
-      if (json.code === 502) {
-        this.$toast.error(json.message)
-      } else {
-        this.success = true
-        window.scrollTo(0, 0)
-      }
+      this.$axios.$post('/contact/v1/send', formData)
+        .then((response) => {
+          this.success = true
+          window.scrollTo(0, 0)
+        })
+        .catch((error) => {
+          this.$toast.error(error.response.data.message)
+        })
+        .finally(() => {
+          this.$store.commit('SET_LOADING', false)
+        })
     }
   }
 }
