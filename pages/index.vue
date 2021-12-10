@@ -29,7 +29,7 @@
           v-ripple
           class="button button--showPortfolio"
         >
-          {{ ctaCaption }}
+          {{ homeShowPortfolioButtonContent }}
         </a>
       </div>
 
@@ -60,16 +60,26 @@ export default {
         'see projects',
         'hide projects'
       ],
-      ctaCaption: ''
+      ctaCaption: '',
+      homePortfolioLoaded: false
     }
   },
   computed: {
     ...mapState({
       baseUrl: state => state.baseUrl,
       showCaseStudies: state => state.showCaseStudies
-    })
+    }),
+    homeShowPortfolioButtonContent () {
+      return !this.isOpen && !this.homePortfolioLoaded
+        ? 'loading...'
+        : this.ctaCaption
+    }
   },
   mounted () {
+    setTimeout(() => {
+      this.$store.commit('SET_LOADING', false)
+    }, 200)
+
     this.$axios.$get('/projects/v1/posts')
       .then((response) => {
         this.projects = response
@@ -78,7 +88,7 @@ export default {
         this.$toast.error(error.response)
       })
       .finally(() => {
-        this.$store.commit('SET_LOADING', false)
+        this.homePortfolioLoaded = true
       })
 
     if (this.showCaseStudies) {
@@ -93,13 +103,13 @@ export default {
       const portfolioElement = document.querySelector('.portfolio')
       if (!this.isOpen) {
         Cookies.set('cookie_case_studies_visible', true, { expires: 365 })
-        this.$store.commit('SET_CASE_STUDIES_STATUS', true)
+        this.$store.commit('SET_CASE_STUDIES_VISIBILITY_STATUS', false)
         portfolioElement.style.display = 'block'
         this.isOpen = true
         this.ctaCaption = this.ctaCaptions[1]
       } else {
         Cookies.set('cookie_case_studies_visible', false, { expires: 365 })
-        this.$store.commit('SET_CASE_STUDIES_STATUS', false)
+        this.$store.commit('SET_CASE_STUDIES_VISIBILITY_STATUS', false)
         this.isOpen = false
         this.ctaCaption = this.ctaCaptions[0]
         portfolioElement.style.display = 'none'

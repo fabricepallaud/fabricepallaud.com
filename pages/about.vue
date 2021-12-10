@@ -32,13 +32,21 @@ import { mapState } from 'vuex'
 export default {
   data () {
     return {
-      content: ''
+      content: '',
+      url: 'https://twitter.com'
     }
   },
   computed: {
     ...mapState({
       baseUrl: state => state.baseUrl
     })
+  },
+  created () {
+    this.$axios
+      .get(`https://www.fabricepallaud.com/wp/wp-content/themes/fabricepallaud/iframe-check.php?url=${this.url}`)
+      .then(function(response) {
+        // console.log(response.data)
+      })
   },
   mounted () {
     this.$axios.$get('/wp/v2/pages/?slug=about')
