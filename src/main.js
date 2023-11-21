@@ -14,8 +14,9 @@ app.use(createPinia())
 import router from './router'
 app.use(router)
 
-import Ripple from 'vue-ripple-directive'
-app.directive('ripple', Ripple);
+import Ripple from 'vue3-whr-ripple-directive'
+Ripple.color = 'rgba(0, 0, 0, 0.035)'
+app.directive('ripple', Ripple)
 
 import Toast from 'vue-toastification';
 import 'vue-toastification/dist/index.css';

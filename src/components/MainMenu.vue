@@ -149,6 +149,10 @@ const hamburgerClick = () => {
       @include top_menu;
       color: $white;
       display: block;
+
+      &:hover {
+        color: $red;
+      }
     }
 
     &.menu-home {
@@ -230,7 +234,7 @@ const hamburgerClick = () => {
 }
 
 .mobile-navigation ul a.router-link-exact-active,
-.nav_primary .router-link-exact-active {
+.nav_primary li a.router-link-exact-active {
   color: $red;
 }
 

@@ -5,18 +5,6 @@
         <h1 v-html="title" />
       </header>
 
-      <!-- <template v-if="getVideoUrl">
-        <p>Let's start with a short clip showing the app in action:</p>
-
-        <figure class="video-figure">
-          <div class="video-wrap">
-            <video controls autoplay muted loop>
-              <source :src="getVideoUrl"></source>
-            </video>
-          </div>
-        </figure>
-      </template> -->
-
       <div v-html="content" />
     </div>
   </div>
@@ -34,17 +22,10 @@ const route = useRoute()
 
 const title = ref('')
 const content = ref('')
-const videoFileName = ref('')
-const getVideoUrl = computed(() => {
-  return videoFileName ? require(`@/assets/vids/${videoFileName}`) : ''
-})
-
-// axios.get(`/wp/v2/project?slug=${route.params.slug}`)
 axios.get(`/project/v1/post/${route.params.id}`)
   .then((response) => {
     title.value = response.data.title.rendered
     content.value = response.data.content.rendered
-    videoFileName.value = response.data.meta.video
   })
   .catch((error) => {
     console.log('error', error)
