@@ -8,7 +8,7 @@
             :key="i"
             :class="item.icon"
           >
-            <router-link :to="item.url">
+            <router-link :to="item.url" :class="activeClass(item.url)">
               {{ item.name }}
             </router-link>
           </li>
@@ -36,6 +36,8 @@ import { MainMenu } from '@/utils/structures'
 import SocialLinks from '@/components/SocialLinks.vue'
 import AppHamburger from '@/components/AppHamburger.vue'
 import MobileNavigation from '@/components/MobileNavigation.vue'
+import { useRoute } from 'vue-router'
+const route = useRoute()
 
 const menu = ref(MainMenu)
 const isSticky = ref(false)
@@ -60,6 +62,10 @@ onUnmounted(() => {
 
 const hamburgerClick = () => {
   store.mobileMenuOpen = !mobileMenuOpen.value
+}
+
+const activeClass = (url) => {
+  return url === '/portfolio' && route.name === 'project' ? 'router-link-exact-active' : ''
 }
 </script>
 
