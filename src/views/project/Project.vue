@@ -5,7 +5,26 @@
         <h1 v-html="title" />
       </header>
 
+      <transition name="video">
+        <div v-if="videoUrl">
+          <p>Let's start with a short clip showing my work on this project in action:</p>
+
+          <figure class="video-figure">
+            <div class="video-wrap">
+              <video controls autoplay muted loop :width="videoWidth">
+                <source :src="videoUrl" />
+              </video>
+            </div>
+          </figure>
+        </div>
+      </transition>
+
       <div v-html="content" />
+
+      <template v-if="showQuestionSection">
+        <h3>Questions?</h3>
+        <p>Don't hesitate to contact me and ask me anything you want about this project.</p>
+      </template>
     </div>
   </div>
 </template>
@@ -14,18 +33,23 @@
 import { useToast } from 'vue-toastification'
 const toast = useToast()
 import axios from 'axios'
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useMainStore } from '@/stores/mainStore'
 const store = useMainStore()
 const route = useRoute()
 
+// fetching project data
 const title = ref('')
 const content = ref('')
+const videoUrl = ref('')
+
 axios.get(`/project/v1/post/${route.params.id}`)
   .then((response) => {
     title.value = response.data.title.rendered
     content.value = response.data.content.rendered
+    const relativePath = `/assets/vids/${response.data.meta.video}`
+    videoUrl.value = response.data.meta.video ? `http://localhost/${relativePath}` : ''
   })
   .catch((error) => {
     console.log('error', error)
@@ -34,6 +58,21 @@ axios.get(`/project/v1/post/${route.params.id}`)
   .finally(() => {
     store.loading = false
   })
+
+// project video width
+const videoWidth = ref(window.innerWidth)
+const updateVideoWidth = () => {
+  videoWidth.value = window.innerWidth
+}
+onMounted(() => {
+  window.addEventListener('resize', updateVideoWidth)
+})
+onUnmounted(() => {
+  window.removeEventListener('resize', updateVideoWidth)
+})
+
+let showQuestionSection = ref(false)
+showQuestionSection.value = route.params.id != 20
 </script>
 
 <style lang="scss">
@@ -162,5 +201,15 @@ axios.get(`/project/v1/post/${route.params.id}`)
 iframe {
   width: 100%;
   aspect-ratio: 16 / 9;
+}
+
+.video-enter-active,
+.video-leave-active {
+  transition: all 0.5s ease-in-out;
+}
+
+.video-enter-from,
+.video-leave-to {
+  opacity: 0;
 }
 </style>

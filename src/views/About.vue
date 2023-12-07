@@ -101,12 +101,6 @@ axios
   margin-top: 0;
 }
 
-.about_skills strong {
-  background: $yellow;
-  padding: 0 5px;
-  margin: 0 3px;
-}
-
 .about_skills li {
   margin-bottom: 1em;
 }

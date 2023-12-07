@@ -29,15 +29,21 @@
           v-ripple
           class="button button--showPortfolio"
         >
-          {{ homeShowPortfolioButtonContent }}
+          <pulse-loader v-if="!projectsLoaded" color="#ff4b68" size="10px"></pulse-loader>
+
+          <template v-else>
+            {{ ctaCaption }}
+          </template>
         </a>
       </div>
 
-      <portfolio
-        v-show="isOpen"
-        :projects="projects"
-        class="home-portfolio"
-      />
+      <transition name="slide">
+        <portfolio
+          v-show="isOpen"
+          :projects="projects"
+          class="home-portfolio"
+        />
+      </transition>
     </div>
   </div>
 </template>
@@ -48,12 +54,15 @@ import { useToast } from 'vue-toastification'
 const toast = useToast()
 import Cookies from 'js-cookie'
 import Portfolio from '@/components/Portfolio.vue'
+import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 import axios from 'axios'
 import { useMainStore } from '@/stores/mainStore'
 const store = useMainStore()
+const projectsLoaded = ref(false)
 
 setTimeout(() => { store.loading = false}, 200)
 
+// load portfolio entries
 const homePortfolioLoaded = ref(false)
 const projects = ref([])
 axios
@@ -67,7 +76,7 @@ axios
   })
   .finally(() => {
     homePortfolioLoaded.value = true
-    store.loading = false
+    projectsLoaded.value = true
   })
 
 const isOpen = ref(false)
@@ -77,14 +86,17 @@ const ctaCaptionOptions = ref([
   'hide projects'
 ])
 
+// remember state of portfolio visibility
+const cookieCaseStudiesVisible = Cookies.get('cookie_case_studies_visible')
 const showCaseStudies = computed(() => useMainStore.showCaseStudies)
-if (showCaseStudies.value) {
+if (showCaseStudies.value || cookieCaseStudiesVisible === 'true') {
   isOpen.value = true
   ctaCaption.value = ctaCaptionOptions.value[1]
 } else {
   ctaCaption.value = ctaCaptionOptions.value[0]
 }
 
+// handle click of 'see projects' button 
 const handleClick = () => {
   const portfolioElement = document.querySelector('.portfolio')
   if (!isOpen.value) {
@@ -102,12 +114,6 @@ const handleClick = () => {
     window.scrollTo(0, 0)
   }
 }
-
-const homeShowPortfolioButtonContent = computed(() => {
-  return !isOpen.value && !homePortfolioLoaded.value
-    ? 'loading...'
-    : ctaCaption.value
-})
 </script>
 
 <style lang="scss" scoped>
@@ -198,5 +204,47 @@ const homeShowPortfolioButtonContent = computed(() => {
   @include media_600 {
     display: block !important;
   }
+}
+
+.v-spinner {
+  line-height: 53px;
+
+  &:deep(.v-pulse) { 
+    margin-left: 6px !important;
+    margin-right: 6px !important;
+  }
+}
+
+.slide-enter-active {
+   -moz-transition-duration: 0.3s;
+   -webkit-transition-duration: 0.3s;
+   -o-transition-duration: 0.3s;
+   transition-duration: 0.3s;
+   -moz-transition-timing-function: ease-in;
+   -webkit-transition-timing-function: ease-in;
+   -o-transition-timing-function: ease-in;
+   transition-timing-function: ease-in;
+}
+
+.slide-leave-active {
+   -moz-transition-duration: 0.3s;
+   -webkit-transition-duration: 0.3s;
+   -o-transition-duration: 0.3s;
+   transition-duration: 0.3s;
+   -moz-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+   -webkit-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+   -o-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+   transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+}
+
+.slide-enter-to, .slide-leave {
+   max-height: 2000px;
+   overflow: hidden;
+}
+
+.slide-enter-from, .slide-leave-to {
+   overflow: hidden;
+   max-height: 0;
+   opacity: 0;
 }
 </style>

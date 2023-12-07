@@ -155,8 +155,11 @@ const activeClass = (url) => {
       @include top_menu;
       color: $white;
       display: block;
+    }
 
-      &:hover {
+    &,
+    &.menu-portfolio {
+      a:hover {
         color: $red;
       }
     }
