@@ -34,36 +34,6 @@ axios
   .finally(() => {
     store.loading = false
   })
-
-/*
-export default {
-  components: {
-    Portfolio
-  },
-  data () {
-    return {
-      projects: []
-    }
-  },
-  computed: {
-    ...mapState({
-      baseUrl: state => state.baseUrl
-    })
-  },
-  mounted () {
-    this.$axios.$get('/projects/v1/posts')
-      .then((res) => {
-        this.projects = res
-      })
-      .catch((err) => {
-        this.$toast.error(err.response)
-      })
-      .finally(() => {
-        this.$store.commit('SET_LOADING', false)
-      })
-  }
-}
-*/
 </script>
 
 <style lang="scss">

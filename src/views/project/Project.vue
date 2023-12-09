@@ -46,10 +46,9 @@ const videoUrl = ref('')
 
 axios.get(`/project/v1/post/${route.params.id}`)
   .then((response) => {
-    title.value = response.data.title.rendered
-    content.value = response.data.content.rendered
-    const relativePath = `/assets/vids/${response.data.meta.video}`
-    videoUrl.value = response.data.meta.video ? `http://localhost/${relativePath}` : ''
+    title.value = response.data.post_title
+    content.value = response.data.post_content
+    videoUrl.value = response.data.acf.demo
   })
   .catch((error) => {
     console.log('error', error)
