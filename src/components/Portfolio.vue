@@ -7,26 +7,26 @@
         class="portfolio_entry square_border"
       >
         <header class="portfolio_entry__header">
-          <router-link :to="{ name: 'project', params: { id: project.ID }}">
+          <router-link :to="{ name: 'project', params: { id: project.post_name }}">
             <h2
               v-html="project.acf.front_page_title"
               class="portfolio_entry_title"
             />
           </router-link>
 
-          <router-link :to="{ name: 'project', params: { id: project.ID }}" class="portfolio_entry_link">
+          <router-link :to="{ name: 'project', params: { id: project.post_name }}" class="portfolio_entry_link">
             see
           </router-link>
         </header>
 
-        <router-link :to="{ name: 'project', params: { id: project.ID }}">
+        <router-link :to="{ name: 'project', params: { id: project.post_name }}">
           <p
             v-html="project.acf.summary"
             class="portfolio_entry__maincontent"
           />
         </router-link>
 
-        <router-link :to="{ name: 'project', params: { id: project.ID }}">
+        <router-link :to="{ name: 'project', params: { id: project.post_name }}">
           <footer class="portfolio_entry__footer">
             <div
               v-html="project.acf.skills"

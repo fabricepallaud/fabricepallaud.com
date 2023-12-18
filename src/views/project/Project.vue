@@ -52,7 +52,7 @@ axios.get(`/project/v1/post/${route.params.id}`)
   })
   .catch((error) => {
     console.log('error', error)
-    toast(error.response.data.message)
+    if (error.response) toast(error.response.data.message)
   })
   .finally(() => {
     store.loading = false
