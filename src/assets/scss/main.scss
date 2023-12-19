@@ -76,17 +76,6 @@ a {
   &:active {
     top: 1px;
   }
-
-  &.underline:after {
-    content: '';
-    position: absolute;
-    bottom: -1px;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: $red;
-    width: 100%;
-  }
 }
 
 a.linktype1 {
@@ -97,6 +86,18 @@ a.linktype1 {
 a.linktype2 {
   font-family: $helvetica_black;
   color: $white;
+}
+
+p { 
+  a {
+    color: $red;
+    border-bottom: 1px solid $red;
+
+    &:hover {
+      color: $black1;
+      border-color: $black1;
+    }
+  }
 }
 
 h1 {
@@ -133,10 +134,6 @@ h3 {
 
 h3.container {
   margin-bottom: 15px;
-}
-
-.content a {
-  border-bottom: 1px solid $red;
 }
 
 .content {

@@ -87,11 +87,6 @@ showQuestionSection.value = route.params.id != 20
   }
 
   p, div {
-    a {
-      color: $red;
-      border-color: $red;
-    }
-
     img {
       max-width: 100%;
       height: auto;

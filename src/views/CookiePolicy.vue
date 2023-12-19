@@ -26,9 +26,3 @@ const store = useMainStore()
 
 setTimeout(() => { store.loading = false}, 200)
 </script>
-
-<style lang="scss">
-p a {
-  color: $red;
-}
-</style>

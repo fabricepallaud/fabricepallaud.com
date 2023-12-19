@@ -27,6 +27,11 @@ const router = createRouter({
     {
       path: '/cookie-policy',
       component: () => import('@/views/CookiePolicy.vue')
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: '404',
+      component: () => import('@/views/NotFound.vue')
     }
   ]
 })
