@@ -98,19 +98,18 @@ if (showCaseStudies.value || cookieCaseStudiesVisible === 'true') {
 
 // handle click of 'see projects' button 
 const handleClick = () => {
+  const expiresIn = 1/8
   const portfolioElement = document.querySelector('.portfolio')
   if (!isOpen.value) {
-    Cookies.set('cookie_case_studies_visible', true, { expires: 365 })
+    Cookies.set('cookie_case_studies_visible', true, { expires: expiresIn })
     store.showCaseStudies = false
-    portfolioElement.style.display = 'block'
     isOpen.value = true
     ctaCaption.value = ctaCaptionOptions.value[1]
   } else {
-    Cookies.set('cookie_case_studies_visible', false, { expires: 365 })
+    Cookies.set('cookie_case_studies_visible', false, { expires: expiresIn })
     store.showCaseStudies = false
     isOpen.value = false
     ctaCaption.value = ctaCaptionOptions.value[0]
-    portfolioElement.style.display = 'none'
     window.scrollTo(0, 0)
   }
 }
@@ -216,35 +215,25 @@ const handleClick = () => {
 }
 
 .slide-enter-active {
-   -moz-transition-duration: 0.3s;
-   -webkit-transition-duration: 0.3s;
-   -o-transition-duration: 0.3s;
-   transition-duration: 0.3s;
-   -moz-transition-timing-function: ease-in;
-   -webkit-transition-timing-function: ease-in;
-   -o-transition-timing-function: ease-in;
-   transition-timing-function: ease-in;
+  transition-duration: 0.3s;
+  transition-timing-function: ease-in;
 }
 
 .slide-leave-active {
-   -moz-transition-duration: 0.3s;
-   -webkit-transition-duration: 0.3s;
-   -o-transition-duration: 0.3s;
-   transition-duration: 0.3s;
-   -moz-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
-   -webkit-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
-   -o-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
-   transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+  transition-duration: 0.3s;
+  transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
 }
 
-.slide-enter-to, .slide-leave {
-   max-height: 2000px;
-   overflow: hidden;
+.slide-leave-from,
+.slide-enter-to {
+  max-height: 800px;
+  overflow: hidden;
 }
 
-.slide-enter-from, .slide-leave-to {
-   overflow: hidden;
-   max-height: 0;
-   opacity: 0;
+.slide-enter-from,
+.slide-leave-to {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
 }
 </style>
