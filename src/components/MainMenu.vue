@@ -107,7 +107,7 @@ const activeClass = (url) => {
   box-sizing: border-box;
 
   @include media_600 {
-    padding: 7px 0;
+    padding: 11px 0;
   }
 
   ul {

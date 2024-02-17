@@ -3,6 +3,7 @@ $black1: #333333;
 $black2: #222;
 $black3: #666;
 $black4: #555;
+$black5: #999;
 $brown: #1d1815;
 $red: #ff4b68;
 $yellow: #fef399;
@@ -19,7 +20,9 @@ $gray8: #d7d7d7;
 $gray9: #bbbbbb;
 $gray95: #f0f0f0;
 $gray96: #f7f7f7;
+$gray97: #ececec;
 $green: #24b502;
+$light-grey: #efefef;
 $green_transparent: rgba(36, 181, 2, 0.075);
 $trans_gray1: rgba(0,0,0,0.04);
 $trans_gray2: rgba(0,0,0,0.08);
@@ -28,13 +31,12 @@ $linkedin: #1c70b2;
 $mobile_menu_bg: rgba(32, 32, 32, 0.92);
 
 /* Misc */
-$content_margin_mobile: 20px;
+$content_margin_mobile: 15px;
 $content_margin_desktop: 30px;
 $content_width: 1200px;
 $content_width_small: 900px;
 
 /* Fonts */
-// $source_pro: 'Source Serif Pro', sans-serif;
 $source_pro: 'Source Serif 4', sans-serif;
 $helvetica_black: 'helvetica_black', sans-serif;
 $lato: 'Lato', sans-serif;
@@ -47,7 +49,7 @@ $lato: 'Lato', sans-serif;
 @mixin regular_text {
   font-family: $source_pro;
   font-size: 21px;
-  line-height: 1.6;
+  line-height: 1.5;
   @include media_600 {
     font-size: 18px;
     line-height: 1.45;

@@ -30,19 +30,22 @@
 </template>
 
 <script setup>
+import { ref, computed, onMounted, onUnmounted, defineComponent, nextTick } from 'vue'
+import axios from 'axios'
+import { mount } from 'mount-vue-component'
+import { h } from 'vue'
 import { useToast } from 'vue-toastification'
 const toast = useToast()
-import axios from 'axios'
-import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
+const route = useRoute()
 import { useMainStore } from '@/stores/mainStore'
 const store = useMainStore()
-const route = useRoute()
 
 // fetching project data
 const title = ref('')
 const content = ref('')
 const videoUrl = ref('')
+const contentElement = ref()
 
 axios.get(`/project/v1/post/${route.params.id}`)
   .then((response) => {
@@ -66,6 +69,7 @@ const updateVideoWidth = () => {
 onMounted(() => {
   window.addEventListener('resize', updateVideoWidth)
 })
+
 onUnmounted(() => {
   window.removeEventListener('resize', updateVideoWidth)
 })

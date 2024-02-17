@@ -21,7 +21,7 @@ import AppHeader from '@/components/AppHeader.vue'
 import AppFooter from '@/components/AppFooter.vue'
 import Cookies from 'js-cookie'
 import { useRoute } from 'vue-router'
-import { nextTick, computed, watch, ref } from 'vue'
+import { computed, watch } from 'vue'
 import { useMainStore } from '@/stores/mainStore'
 const store = useMainStore()
 
@@ -38,7 +38,7 @@ const showCookieNotice = computed(() => {
 const cookieWasDismissed = Cookies.get('cookie_notice_dismissed')
 store.showCookieNotice = !cookieWasDismissed
 
-const route = useRoute();
+const route = useRoute()
 const path = computed(() => route.path)
 watch(path, () => {
   store.loading = true

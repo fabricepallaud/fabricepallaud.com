@@ -33,6 +33,7 @@ div {
   max-width: $content_width;
   margin: 0 auto;
   overflow: hidden;
+  
   @include media_1300 {
     padding-left: $content_margin_desktop;
     padding-right: $content_margin_desktop;
@@ -307,4 +308,65 @@ iframe {
   background: $red;
   left: 121px;
   top: 0;
+}
+
+pre {
+  code.hljs {
+    &:deep(.hljs-keyword) {
+      color: green !important;
+    }
+  }
+}
+
+pre {
+  code.hljs {
+    padding: 0.75em 0 !important;
+    background: #1d1815;
+
+    .hljs-keyword {
+      color: green;
+    }
+
+    .hljs-name {
+      color: $red;
+    }
+
+    .hljs-attr {
+      color: rgb(97, 175, 239);
+    }
+
+    .hljs-string {
+      color: rgb(152, 195, 121);
+    }
+
+    .hljs-keyword {
+      color: $red;
+    }
+
+    .hljs-variable.language_ {
+      color: white;
+    }
+
+    &,
+    .hljs-title,
+    .hljs-variable.language_,
+    .hljs-tag,
+    .hljs-function,
+    .hljs-params,
+    .hljs-property {
+      color: #adbac7;
+    }
+
+    .function_ {
+      color: rgba(229, 192, 123);
+    }
+
+    &,
+    span {
+      font-family: Inconsolata;
+      font-size: 17px;
+      font-weight: 500;
+      line-height: 1.15;
+    }
+  }
 }

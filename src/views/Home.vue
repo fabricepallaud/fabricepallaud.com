@@ -2,7 +2,7 @@
   <div class="wrap wrap--front">
     <div class="container container--home">
       <h1 class="home_intro__title">
-        Hi I'm <span>Fabrice</span>, Front-end Developer.
+        Hi I'm Fabrice, <span>Front-end Developer</span>.
       </h1>
 
       <p class="home_intro__summary">
@@ -11,15 +11,15 @@
         </span>
 
         <span>
-          <b>•</b> <strong>JavaScript</strong>
+          <b></b> <strong>JavaScript</strong>
         </span>
 
         <span>
-          <b>•</b> <strong>PHP</strong>
+          <b></b> <strong>PHP</strong>
         </span>
 
         <span>
-          <b>•</b> <strong>WordPress</strong>
+          <b></b> <strong>WordPress</strong><em>.</em>
         </span>
       </p>
 
@@ -36,7 +36,9 @@
           </template>
         </a>
       </div>
+    </div>
 
+    <div ref="portfolio" class="container container--portfolio">
       <transition name="slide">
         <portfolio
           v-show="isOpen"
@@ -49,18 +51,17 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, nextTick, onMounted } from 'vue'
 import { useToast } from 'vue-toastification'
 const toast = useToast()
 import Cookies from 'js-cookie'
 import Portfolio from '@/components/Portfolio.vue'
 import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
+import { animatedScrollTo } from 'es6-scroll-to'
 import axios from 'axios'
 import { useMainStore } from '@/stores/mainStore'
 const store = useMainStore()
 const projectsLoaded = ref(false)
-
-setTimeout(() => { store.loading = false}, 200)
 
 // load portfolio entries
 const homePortfolioLoaded = ref(false)
@@ -69,6 +70,7 @@ axios
   .get('/projects/v1/posts')
   .then(response => {
     projects.value = response.data
+    store.loading = false
   })
   .catch(error => {
     console.log(error)
@@ -96,15 +98,29 @@ if (showCaseStudies.value || cookieCaseStudiesVisible === 'true') {
   ctaCaption.value = ctaCaptionOptions.value[0]
 }
 
-// handle click of 'see projects' button 
-const handleClick = () => {
+const portfolio = ref()
+const handleClick = async () => {
   const expiresIn = 1/8
-  const portfolioElement = document.querySelector('.portfolio')
   if (!isOpen.value) {
     Cookies.set('cookie_case_studies_visible', true, { expires: expiresIn })
     store.showCaseStudies = false
     isOpen.value = true
     ctaCaption.value = ctaCaptionOptions.value[1]
+
+    await nextTick()
+    setTimeout(() => {
+    const portfolioElement = document.querySelector('.portfolio')
+    const portfolioElementPosition = portfolioElement.getBoundingClientRect().top + window.scrollY
+    const scrollToTarget = Math.trunc(portfolioElementPosition) - 290
+
+    const defaultOptions = {
+      speed: 500,
+      minDuration: 0,
+      maxDuration: 150
+    }
+
+    animatedScrollTo(scrollToTarget, defaultOptions)
+    }, 300)
   } else {
     Cookies.set('cookie_case_studies_visible', false, { expires: expiresIn })
     store.showCaseStudies = false
@@ -118,7 +134,7 @@ const handleClick = () => {
 <style lang="scss" scoped>
 .wrap.wrap--front {
   @include media_600_up {
-    padding: 120px 0;
+    padding: 120px 0 75px;
   }
 }
 
@@ -128,6 +144,11 @@ const handleClick = () => {
   overflow: visible;
   padding-top: 5px;
   padding-bottom: 5px;
+
+  @include media_600 {
+    padding-top: 30px;
+    padding-bottom: 60px;
+  }
 }
 
 .home_intro__title {
@@ -147,28 +168,50 @@ const handleClick = () => {
 .home_intro__summary {
   margin-bottom: 40px;
   text-align: center;
+
   @include media_600 {
     margin-bottom: 60px;
   }
-}
 
-.home_intro__summary,
-.home_intro__summary b {
-  font-weight: normal;
-}
+  span {
+    font-family: $source_pro;
+  }
 
-.home_intro__summary b {
-  margin: 0 0.15em 0 0.15em;
-  color: $gray2;
-  @include media_600 {
+  em {
     display: none;
+
+    @include media_600 {
+      display: inline-block;
+    }
   }
 }
 
-.home_intro__summary strong {
-  color: $gray2;
-  @include media_600 {
-    color: $black4;
+.home_intro__summary {
+  span {
+    font-weight: normal;
+    position: relative;
+    margin-left: 12px;
+
+    b {
+      margin: 0 0.15em 0 0.15em;
+      color: $gray2;
+
+      &:before {
+        position: absolute;
+        content: "•";
+        width: 20px;
+        height: 20px;
+        left: -10px;
+        top: 3px;
+
+        @include media_600 {
+          content: ",";
+          font-weight: normal;
+          color: $gray4;
+          left: 0;
+        }
+      }
+    }
   }
 }
 
@@ -184,6 +227,37 @@ const handleClick = () => {
   color: $red;
 }
 
+.home_intro__title,
+.home_intro__title span,
+.home_intro__summary,
+.home_intro__summary span {
+  @include media_600 {
+    font-size: 23px;
+    font-weight: normal;
+    margin: 0;
+    font-family: $source_pro;
+    text-align: left;
+    display: inline;
+    color: $gray4;
+  }
+}
+
+.home_intro__summary strong,
+.home_intro__title span {
+  @include media_600 {
+    font-weight: 900;
+    color: $black1;
+  }
+}
+
+.home_intro__summary strong {
+  color: $gray2;
+
+  @include media_600 {
+    color: $red;
+  }
+}
+
 .home_intro__cta {
   display: flex;
   justify-content: center;
@@ -196,6 +270,12 @@ const handleClick = () => {
 
   .button {
     width: 210px;
+  }
+}
+
+.container--portfolio {
+  @include media_600 {
+    padding: 0;
   }
 }
 

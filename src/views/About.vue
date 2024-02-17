@@ -18,7 +18,9 @@
         />
 
         <div class="about_illustration">
-          <img class="about_illustration__img" src="@/assets/img/about.jpg">
+          <Transition name="fade">
+            <img v-show="featuredImage" class="about_illustration__img" :src="featuredImage">
+          </Transition>
         </div>
       </div>
     </div>
@@ -33,11 +35,13 @@ import { useMainStore } from '@/stores/mainstore'
 const store = useMainStore()
 import { ref } from 'vue'
 const content = ref('')
+const featuredImage = ref('')
 
 axios
   .get('/wp/v2/pages/?slug=about')
   .then(response => {
     content.value = response.data[0].content.rendered
+    featuredImage.value = response.data[0].featured_image_url
   })
   .catch(error => {
     console.log(error)
@@ -109,5 +113,15 @@ axios
   position: relative;
   top: 2px;
   display: none;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.75s;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

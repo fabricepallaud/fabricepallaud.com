@@ -33,8 +33,8 @@ defineProps({
   &.menu-bar {
     display: none;
     position: absolute;
-    top: 6px;
-    right: 70px;
+    top: 10px;
+    right: 75px;
     z-index: 0;
 
     @include media_600 {
@@ -42,7 +42,7 @@ defineProps({
     }
 
     li + li {
-      margin-left: 20px;
+      margin-left: 30px;
       top: 2px;
     }
   }

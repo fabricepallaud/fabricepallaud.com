@@ -13,32 +13,27 @@
   height: 100vh;
   z-index: 1000;
   padding: 1rem;
-  text-align: center;
   font-size: 3rem;
   font-family: sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
   animation: fadeIn ease 1.25s;
-  -webkit-animation: fadeIn ease 1.25s;
-  -moz-animation: fadeIn ease 1.25s;
-  -o-animation: fadeIn ease 1.25s;
-  -ms-animation: fadeIn ease 1.25s;
-}
 
-.loading-icon {
-  position: relative;
-  top: 235px;
-  display: inline-block;
-  width: 3.5rem;
-  height: 3.5rem;
-  border: 5px solid $red;
-  border-radius: 50%;
-  border-top-color: $brown;
-  animation: spin 1s ease-in-out infinite;
+  .loading-icon {
+    position: relative;
+    top: 235px;
+    display: inline-block;
+    width: 3.5rem;
+    height: 3.5rem;
+    border: 5px solid $red;
+    border-radius: 50%;
+    border-top-color: $brown;
+    animation: spin 1s ease-in-out infinite;
 
-  @include media_600 {
-    top: 90px;
+    @include media_600 {
+      top: 205px;
+    }
   }
 }
 
